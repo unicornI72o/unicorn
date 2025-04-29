@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>遗忘的记忆</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+  </head>
+  <body class="flex min-h-screen flex-col justify-between bg-gray-100">
+    <div class="flex-grow"></div>
+    <div class="mx-auto max-w-[50ch] p-6" id="memories">
+      <div class="space-y-4 text-black/80" id="typewriter">
+        <p>
+          <span></span>
+        </p>
+        <p><span>恐れないで 深く沈めて</span></p>
+        <p><span>惑わす宇宙の精霊の影を</span></p>
+        <p><span>願いは揺るぎなく願えば</span></p>
+        <p><span>いつの日か叶うと思ってた</span></p>
+        <p><span>壊れた理想 変わってゆく愛を</span></p>
+        <p><span>もう一度 信じること 許してほしい</span></p>
+      </div>
+    </div>
+    <div class="flex-grow"></div>
+    <footer class="mt-6 p-4 text-center text-xs text-black/40">
+      <div class="flex flex-col gap-2">
+        <div>并未真正消失</div>
+        <a
+          href="https://www.bilibili.com/video/BV1NFLdzREbG/"
+          rel="nofollow noopener noreferrer"
+          class="hover:underline"
+          target="_blank"
+          >我于无尽的夜里守望，将未熄的梦叠成泛着涟漪的光。
+          <br />
+          归途的灯塔被风暴遮蔽，不曾褪色的仍是你我共筑的愿望。
+        </a>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const typewriter = document.getElementById('typewriter')
+        const lines = typewriter.querySelectorAll('p span')
+
+        gsap.set(lines, { autoAlpha: 1 })
+
+        const tl = gsap.timeline()
+
+        lines.forEach((line, index) => {
+          const chars = line.textContent.split('')
+          line.textContent = ''
+          chars.forEach((char) => {
+            const span = document.createElement('span')
+            span.textContent = char
+            span.style.opacity = '0'
+            span.style.display = 'inline-block'
+            line.appendChild(span)
+          })
+
+          const charSpans = line.querySelectorAll('span')
+          tl.to(
+            charSpans,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1.2,
+              stagger: {
+                each: 0.08,
+                ease: 'power1.in'
+              },
+              ease: 'elastic.out(1, 0.3)'
+            },
+            '-=0.9'
+          )
+
+          if (index < lines.length - 1) {
+            tl.to({}, { duration: 0.5 })
+          }
+        })
+
+        gsap.set(typewriter.querySelectorAll('p span span'), {
+          opacity: 0,
+          y: 20
+        })
+      })
+    </script>
+  </body>
+</html>
